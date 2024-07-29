@@ -1,1 +1,1 @@
-Grocery Online Monolith Online Service
+Grocery Monolith Online Service
