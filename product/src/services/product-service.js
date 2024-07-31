@@ -20,6 +20,7 @@ class ProductService {
     
     async GetProducts(){
         try{
+            
             const products = await this.repository.Products();
     
             let categories = {};
