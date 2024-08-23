@@ -49,3 +49,12 @@ module.exports.FormateData = (data) => {
     throw new Error("Data Not found!");
   }
 };
+
+
+module.exports.PublishCustomerEvent = async (payload) => {
+  await axios.post('http://localhost:8000/customer/app-events',{payload})
+}
+
+module.exports.PublishProductEvent = async (payload) => {
+  await axios.post('http://localhost:8000/app-events',{payload})
+}

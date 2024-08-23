@@ -90,7 +90,9 @@ module.exports = (app) => {
   });
 
   app.put("/cart", UserAuth, async (req, res, next) => {
-    const { _id } = req.user._id;
+    const _id = req.user._id;
+
+    console.log(_id)
 
     try {
       const { data } = await service.GetProductPayload(
@@ -109,6 +111,7 @@ module.exports = (app) => {
 
       return res.status(200).json(response);
     } catch (err) {
+      console.log(1)
       next(err);
     }
   });
@@ -141,7 +144,6 @@ module.exports = (app) => {
   app.get("/", async (req, res, next) => {
     //check validation
     try {
-      console.log(1)
       const { data } = await service.GetProducts();
       return res.status(200).json(data);
     } catch (error) {

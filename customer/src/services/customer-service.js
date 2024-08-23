@@ -122,6 +122,7 @@ class CustomerService {
 
     async ManageCart(customerId, product, qty, isRemove){
         try {
+            console.log(customerId, product, qty, isRemove)
             const cartResult = await this.repository.AddCartItem(customerId, product, qty, isRemove);        
             return FormateData(cartResult);
         } catch (err) {
