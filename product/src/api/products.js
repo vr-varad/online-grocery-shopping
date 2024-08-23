@@ -92,7 +92,6 @@ module.exports = (app) => {
   app.put("/cart", UserAuth, async (req, res, next) => {
     const _id = req.user._id;
 
-    console.log(_id)
 
     try {
       const { data } = await service.GetProductPayload(

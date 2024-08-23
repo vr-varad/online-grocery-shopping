@@ -40,7 +40,7 @@ class ShoppingService {
 
   async ManageCart(customerId, item, qty, isRemove) {
     try {
-      const cartResult = await this.ManageCart(customerId, item, qty, isRemove);
+      const cartResult = await this.repository.AddCartItem(customerId, item, qty, isRemove);
       return FormateData(cartResult);
     } catch (error) {
       throw new APIError("Data not found", error);

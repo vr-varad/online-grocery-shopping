@@ -5,7 +5,11 @@ const {
   CartModel,
 } = require("../models");
 const { v4: uuidv4 } = require("uuid");
-const { APIError, BadRequestError } = require("../../utils/app-errors");
+const {
+  APIError,
+  BadRequestError,
+  STATUS_CODES,
+} = require("../../utils/app-errors");
 
 //Dealing with data base operations
 class ShoppingRepository {
@@ -28,7 +32,7 @@ class ShoppingRepository {
     //check transaction for payment Status
 
     try {
-      const cart = await CartModel.findOne({customerId: customerId})
+      const cart = await CartModel.findOne({ customerId: customerId });
 
       if (cart) {
         let amount = 0;
@@ -88,7 +92,8 @@ class ShoppingRepository {
 
   async AddCartItem(customerId, item, qty, isRemove) {
     try {
-      const cart = await CartModel.findOne({ customerId: customerId });
+      let cart = await CartModel.findOne({ customerId: customerId });
+      const { _id } = item;
 
       if (cart) {
         let isExist = false;
@@ -96,7 +101,7 @@ class ShoppingRepository {
 
         if (cartItems.length > 0) {
           cartItems.map((item) => {
-            if (item.product._id.toString() === product._id.toString()) {
+            if (item.product._id.toString() === _id.toString()) {
               if (isRemove) {
                 cartItems.splice(cartItems.indexOf(item), 1);
               } else {
@@ -111,6 +116,7 @@ class ShoppingRepository {
           }
           cart.items = cartItems;
           await cart.save();
+          return cart
         } else {
           return await CartModel.create({
             customerId,
@@ -129,7 +135,7 @@ class ShoppingRepository {
       throw new APIError(
         "API Error",
         STATUS_CODES.INTERNAL_ERROR,
-        "Unable to Create Customer"
+        "Unable to Create Cart"
       );
     }
   }
